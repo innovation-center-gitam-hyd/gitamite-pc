@@ -1,0 +1,10 @@
+{
+    "runInTerminal.commands": [
+    {
+        "key": "ctrl+e",
+        "command": "npm start",
+        "args": {"cmd": "/usr/bin/env bash ${relativeFile}", "match": ".*"},
+        "when": "resourceLangId == javascript"
+    }
+    ]
+}
