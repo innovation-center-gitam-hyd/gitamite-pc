@@ -32,10 +32,11 @@ function  openMainWindow(){
 
 function openEditWindow(){
    editWindow = new BrowserWindow({ 
-     width: 400, height: 300,
-     webPreferences: {
-       nodeIntegration: true,
-       contextIsolation: false,
+    autoHideMenuBar: true,
+    width: 400, height: 300,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       }
     })
    editWindow.loadFile(path.join(__dirname, 'editWindow.html'))
