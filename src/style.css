@@ -19,7 +19,7 @@ a {
 .row {
     display: flex;
     justify-content: space-evenly;
-    margin: 25% 0;
+    margin: 23% 0;
 }
 .form-control {
     border-radius: 10px;
