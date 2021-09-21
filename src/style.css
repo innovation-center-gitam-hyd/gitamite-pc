@@ -21,3 +21,33 @@ a {
     justify-content: space-evenly;
     margin: 25% 0;
 }
+.form-control {
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    border: 2px solid #ba5b5b;
+    box-shadow: 0 0 5px #ba5b5b;
+}
+
+.btn-outline-primary {
+    color: black;
+    border-radius: 10px;
+    border: 1px solid #ba5b5b;
+}
+
+.btn-outline-primary:hover {
+    background-color: #ba5b5b;
+    border: 1px solid #ba5b5b;
+}
+
+.btn-outline-primary:focus {
+    box-shadow: none;
+    border: 1px solid #ba5b5b;
+}
+
+.align-items-center {
+    text-align: center;
+}
+
+
