@@ -17,7 +17,7 @@ function  openMainWindow(){
      }
   })
 
-  mainWindow.loadURL('https://login.gitam.edu/Login.aspx')
+  mainWindow.loadFile(path.join(__dirname, './cards.html'))
 
   createMenu()
 
