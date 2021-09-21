@@ -30,6 +30,10 @@ function  openMainWindow(){
   })
 }
 
+const openCard = () => {
+  mainWindow.loadFile(path.join(__dirname, 'cards.html'))
+}
+
 function openEditWindow(){
    editWindow = new BrowserWindow({ 
     autoHideMenuBar: true,
@@ -51,12 +55,13 @@ ipcMain.on('cred', (e,cred)=>{
 
 function autologin(){
   try {
-    var data = helper.readFromFile('cred.txt')
-    var username = data['G-username']
-    var password = data['G-password']
+    const data = helper.readFromFile('cred.txt')
+    const username = data['G-username']
+    const password = data['G-password']
     let code = `
     document.getElementById("txtusername").value = '${username}'
     document.getElementById("password").value = '${password}'
+    document.getElementById("Submit").click();
     `
     mainWindow.webContents.executeJavaScript(code)
   } catch (error) {
@@ -71,7 +76,9 @@ function createMenu() {
       submenu: [
         { label:'Edit Credentials',
           click() { openEditWindow() }},
-        { label:'Exit',                 
+        { label:'Open Cards',
+          click() { openCard()}},
+        { label:'Exit',
           click() { app.quit() }}
       ]
     },
