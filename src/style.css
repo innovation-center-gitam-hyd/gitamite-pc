@@ -1,10 +1,12 @@
 .container {
     height: 50%;
 }
+
 .card {
     position: relative;
     border-radius: 1rem;
 }
+
 .card-img-top {
     margin: 1rem auto;
     width: 40%;
@@ -12,6 +14,9 @@
 a {
     text-decoration: none;
     color: #fff;
+}
+a:hover {
+    color: #ba5b5b;
 }
 .card-title {
     text-align: center;
