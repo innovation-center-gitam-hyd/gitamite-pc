@@ -59,7 +59,7 @@ function openCard () {
 function openEditWindow(){
   editWindow = new BrowserWindow({ 
     autoHideMenuBar: true,
-    width: 500, height: 400,
+    width: 500, height: 500,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
