@@ -1,11 +1,16 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { app, shell, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron')
 const helper = require('./helper')
 const path = require('path')
+const checkUpdate = require('./checkUpdate')
 
 let spAutoLogin = true
 let mAutoLogin = true
+let menu
 let mainWindow
 let editWindow
+let link1 = 'https://login.gitam.edu/Login.aspx'
+let link2 = 'https://learn.gitam.edu/login/index.php'
+let releases = 'https://github.com/innovation-center-gitam-hyd/gitamite-pc/releases/latest'
 
 app.on('ready', openMainWindow)
 
@@ -22,18 +27,17 @@ function  openMainWindow(){
 
   createMenu()
 
+  checkForUpdate()
+
   mainWindow.webContents.on("did-finish-load", () => {
-    var link1 = 'https://login.gitam.edu/Login.aspx'
-    var link2 = 'https://learn.gitam.edu/login/index.php'
+
     mainWindow.webContents.findInPage('Invalid login')
     
-    if(mainWindow.webContents.getURL() == link1 && spAutoLogin){
+    if(spAutoLogin){
       autologinStudentPortal()
-      spAutoLogin = false
     }
-    if(mainWindow.webContents.getURL() == link2 && mAutoLogin){
+    if(mAutoLogin){
       autologinMoodle()
-      mAutoLogin = false
     }
   })
 
@@ -76,6 +80,9 @@ ipcMain.on('cred', (e,cred) => {
 })
 
 function autologinStudentPortal(){
+  if(mainWindow.webContents.getURL() != link1){
+    return 
+  }
   try {
     const data = helper.readFromFile('cred.txt')
     const username = data['G-username']
@@ -92,6 +99,9 @@ function autologinStudentPortal(){
 }
 
 function autologinMoodle(){
+  if(mainWindow.webContents.getURL() != link2){
+    return 
+  }
   try {
     const data = helper.readFromFile('cred.txt')
     const username = data['M-username']
@@ -107,9 +117,31 @@ function autologinMoodle(){
   }
 }
 
+function autoFill(){
+  autologinStudentPortal()
+  autologinMoodle()
+}
+
+function checkForUpdate(){
+  checkUpdate.isNewUpdateFound().then(bool =>{
+    var v = new MenuItem({
+      label: 'Update',
+      click() { shell.openExternal(releases) }
+    })
+    
+    if(bool){
+      menu.append(v)
+      Menu.setApplicationMenu(menu)
+    }
+  })
+}
 
 function createMenu() {
-  var menu = Menu.buildFromTemplate([
+  menu = Menu.buildFromTemplate([
+    {
+      label: 'Home',
+      click() { openCard() }
+    },
     {
       label:'Edit Credentials',
       click() { openEditWindow() }
@@ -117,6 +149,10 @@ function createMenu() {
     {
       label: 'Reload',
       role: 'reload'
+    },
+    {
+      label: 'Fill',
+      click() { autoFill() }
     }
   ])
   Menu.setApplicationMenu(menu) 
