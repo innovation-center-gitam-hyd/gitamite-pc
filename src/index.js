@@ -96,7 +96,6 @@ function autologinMoodle(){
     const data = helper.readFromFile('cred.txt')
     const username = data['M-username']
     const password = data['M-password']
-    console.log(username, password)
     let code = `
     document.getElementById("username").value = '${username}'
     document.getElementById("password").value = '${password}'
