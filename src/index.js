@@ -16,6 +16,7 @@ app.on('ready', openMainWindow)
 
 function  openMainWindow(){
   mainWindow = new BrowserWindow({
+    icon: path.join(__dirname, '../icon.png'),
     width: 800, height: 600, minHeight:400, minWidth:400,
     webPreferences: {
       nodeIntegration: true,
