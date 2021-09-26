@@ -18,7 +18,10 @@ async function getLatestVersion(){
             return '404'
         }
         return version
-    } catch (err) {}
+    } catch (err) {
+        return '404'
+    } 
+    
 }
 
 async function isNewUpdateFound(){
