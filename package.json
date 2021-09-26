@@ -49,6 +49,7 @@
     "browserify": "^17.0.0",
     "cheerio": "^1.0.0-rc.10",
     "crypto-js": "^4.1.1",
+    "electron-builder": "^22.11.7",
     "electron-squirrel-startup": "^1.0.0",
     "request-promise": "^4.2.6"
   },
