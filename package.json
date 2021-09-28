@@ -7,7 +7,8 @@
   "build": {
     "publish": [
       {
-        "provider": "github"
+        "provider": "github",
+        "releaseType": "draft"
         }
     ]
   },
