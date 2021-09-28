@@ -13,15 +13,22 @@ let link2 = 'https://learn.gitam.edu/login/index.php'
 let releases = 'https://github.com/innovation-center-gitam-hyd/gitamite-pc/releases/latest'
 
 app.on('ready', openMainWindow)
+app.on('browser-window-created', (e,window) => {
+  if(window.getTitle() != "Edit Credentials"){
+    window.setSize( 1200, 750)
+  }
+  window.center()
+  window.setIcon(path.join(__dirname, '../icon.png'))
+  window.setMenu(null)
+  window.webPreferences = {
+    nodeIntegration: true,
+    contextIsolation: false,
+  }
+})
 
-function  openMainWindow(){
+function  openMainWindow() {
   mainWindow = new BrowserWindow({
-    icon: path.join(__dirname, '../icon.png'),
-    width: 800, height: 600, minHeight:400, minWidth:400,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-     }
+    title: "Gitamite PC"
   })
 
   mainWindow.loadFile(path.join(__dirname, 'cards.html'))
@@ -61,14 +68,10 @@ function openCard () {
   mainWindow.loadFile(path.join(__dirname, 'cards.html'))
 }
 
-function openEditWindow(){
+function openEditWindow() {
   editWindow = new BrowserWindow({ 
-    autoHideMenuBar: true,
-    width: 500, height: 500,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      }
+    title : "Edit Credentials",
+    width: 500, height: 500
   })
   editWindow.loadFile(path.join(__dirname, 'editWindow.html'))
   editWindow.on('closed', () => {
@@ -80,7 +83,7 @@ ipcMain.on('cred', (e,cred) => {
   helper.writeToFile('cred.txt', cred)
 })
 
-function autologinStudentPortal(){
+function autologinStudentPortal() {
   if(mainWindow.webContents.getURL() != link1){
     return 
   }
@@ -99,7 +102,7 @@ function autologinStudentPortal(){
   }
 }
 
-function autologinMoodle(){
+function autologinMoodle() {
   if(mainWindow.webContents.getURL() != link2){
     return 
   }
@@ -118,12 +121,7 @@ function autologinMoodle(){
   }
 }
 
-function autoFill(){
-  autologinStudentPortal()
-  autologinMoodle()
-}
-
-function checkForUpdate(){
+function checkForUpdate() {
   checkUpdate.isNewUpdateFound().then(bool =>{
     var v = new MenuItem({
       label: 'Update',
@@ -153,11 +151,15 @@ function createMenu() {
     },
     {
       label: 'Fill',
-      click() { autoFill() }
+      click() { 
+        autologinStudentPortal()
+        autologinMoodle() 
+      }
     }
   ])
   Menu.setApplicationMenu(menu) 
 }
+
 
 
 // windows shortcut crap
@@ -172,8 +174,3 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
 })
-
-
-
-
-

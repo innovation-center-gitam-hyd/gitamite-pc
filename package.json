@@ -5,19 +5,17 @@
   "description": "Gitam app to access all the gitam websites built for PC. ",
   "main": "src/index.js",
   "build": {
+    "appId": "org.innovationcenter.gitamitepc",
     "publish": [
       {
         "provider": "github",
         "releaseType": "draft"
-        }
+      }
     ]
   },
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "keywords": [],
   "author": {
@@ -58,6 +56,7 @@
     "cheerio": "^1.0.0-rc.10",
     "crypto-js": "^4.1.1",
     "electron-squirrel-startup": "^1.0.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
