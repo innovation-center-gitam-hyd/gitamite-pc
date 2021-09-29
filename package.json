@@ -1,7 +1,7 @@
 {
   "name": "gitamite-pc",
   "productName": "gitamite-pc",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Gitam app to access all the gitam websites built for PC. ",
   "main": "src/index.js",
   "build": {
@@ -14,7 +14,10 @@
     ]
   },
   "scripts": {
-    "start": "electron .",
+    "patch": "npm version patch git push",
+    "minor": "npm version minor git push",
+    "major": "npm version major git push",
+    "start.": "electron .",
     "dist": "electron-builder"
   },
   "keywords": [],
