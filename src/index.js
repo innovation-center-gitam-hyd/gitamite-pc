@@ -20,10 +20,6 @@ app.on('browser-window-created', (e,window) => {
   window.center()
   window.setIcon(path.join(__dirname, '../icon.png'))
   window.setMenu(null)
-  window.webPreferences = {
-    nodeIntegration: true,
-    contextIsolation: false,
-  }
 })
 
 function  openMainWindow() {
@@ -71,7 +67,11 @@ function openCard () {
 function openEditWindow() {
   editWindow = new BrowserWindow({ 
     title : "Edit Credentials",
-    width: 500, height: 500
+    width: 500, height: 500,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
   })
   editWindow.loadFile(path.join(__dirname, 'editWindow.html'))
   editWindow.on('closed', () => {
