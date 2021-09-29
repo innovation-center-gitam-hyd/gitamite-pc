@@ -1,12 +1,13 @@
-name: Build/release
+name: Build
 
 on:
-  push:
-    tags:        
-      - '*'
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
 
 jobs:
-  release:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -22,7 +23,7 @@ jobs:
         with:
           node-version: 14
 
-      - name: Build/release Electron app
+      - name: Build/Release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
           args: "-c.snap.publish=github -p always"
