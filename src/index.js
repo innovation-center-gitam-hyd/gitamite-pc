@@ -81,6 +81,7 @@ function openEditWindow() {
 
 ipcMain.on('cred', (e,cred) => {
   helper.writeToFile('cred.txt', cred)
+  editWindow.close()
 })
 
 function autologinStudentPortal() {
