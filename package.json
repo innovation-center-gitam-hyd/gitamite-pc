@@ -14,9 +14,9 @@
     ]
   },
   "scripts": {
-    "patch": "npm version patch git push",
-    "minor": "npm version minor git push",
-    "major": "npm version major git push",
+    "patch": "npm version patch &&  git push",
+    "minor": "npm version minor && git push",
+    "major": "npm version major && git push",
     "start": "electron .",
     "dist": "electron-builder"
   },
