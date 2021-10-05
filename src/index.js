@@ -22,7 +22,21 @@ electron.app.on('browser-window-created', (e,window) => {
   }
   window.center()
   window.setIcon(path.join(__dirname, '../icon.png'))
-  window.setMenu(null)
+  menu = Menu.buildFromTemplate([
+    {
+      label: 'Back',
+      click() { window.webContents.goBack() }
+    },
+    {
+      label:'Forward',
+      click() { window.webContents.goForward() }
+    },
+    {
+      label: 'Reload',
+      role: 'reload'
+    }
+  ])
+  window.setMenu(menu)
 })
 
 function  openMainWindow() {
@@ -147,6 +161,14 @@ function checkForUpdate() {
 
 function createMenu() {
   menu = Menu.buildFromTemplate([
+    {
+      label: 'Back',
+      click() { window.webContents.goBack() }
+    },
+    {
+      label:'Forward',
+      click() { window.webContents.goForward() }
+    },
     {
       label: 'Home',
       click() { openCard() }
