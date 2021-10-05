@@ -1,9 +1,16 @@
 var CryptoJS = require("crypto-js")
 const fs = require('fs')
+const path = require('path')
 
 var key = 'your secret key 123'
 
-function encrypt (message ){
+function getCredPath(app){
+    const userDataPath = app.getPath('userData')
+    const fullPath = path.join(userDataPath,'UserData/cred.txt')
+    return fullPath
+}
+
+function encrypt (message){
     var ciphertext = CryptoJS.AES.encrypt(message, key).toString()
     return ciphertext
 }
@@ -26,4 +33,4 @@ function readFromFile(path){
     return data
 }
 
-module.exports = { encrypt, decrypt, writeToFile, readFromFile }
+module.exports = { encrypt, decrypt, writeToFile, readFromFile, getCredPath }

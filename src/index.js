@@ -1,7 +1,10 @@
-const { app, shell, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron')
+const electron = require('electron')
+const {BrowserWindow, Menu, MenuItem } = require('electron')
 const helper = require('./helper')
 const path = require('path')
 const checkUpdate = require('./checkUpdate')
+require('@electron/remote/main').initialize()
+
 
 let spAutoLogin = true
 let mAutoLogin = true
@@ -12,8 +15,8 @@ let link1 = 'https://login.gitam.edu/Login.aspx'
 let link2 = 'https://learn.gitam.edu/login/index.php'
 let releases = 'https://github.com/innovation-center-gitam-hyd/gitamite-pc/releases/latest'
 
-app.on('ready', openMainWindow)
-app.on('browser-window-created', (e,window) => {
+electron.app.on('ready', openMainWindow)
+electron.app.on('browser-window-created', (e,window) => {
   if(window.getTitle() != "Edit Credentials"){
     window.setSize( 1200, 750)
   }
@@ -56,7 +59,7 @@ function  openMainWindow() {
   }) 
   
   mainWindow.on('closed', () => {
-    app.quit()
+    electron.app.quit()
   })
 }
 
@@ -70,17 +73,19 @@ function openEditWindow() {
     width: 500, height: 500,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: false 
     }
   })
+  require("@electron/remote/main").enable(editWindow.webContents)
   editWindow.loadFile(path.join(__dirname, 'editWindow.html'))
   editWindow.on('closed', () => {
     editWindow = null
   })
 }
 
-ipcMain.on('cred', (e,cred) => {
-  helper.writeToFile('cred.txt', cred)
+electron.ipcMain.on('cred', (e,cred) => {
+  const userDataPath = helper.getCredPath(electron.app)
+  helper.writeToFile(userDataPath, cred)
   editWindow.close()
 })
 
@@ -89,7 +94,8 @@ function autologinStudentPortal() {
     return 
   }
   try {
-    const data = helper.readFromFile('cred.txt')
+    const userDataPath = helper.getCredPath(electron.app)
+    const data = helper.readFromFile(userDataPath)
     const username = data['G-username']
     const password = data['G-password']
     let code = `
@@ -99,6 +105,7 @@ function autologinStudentPortal() {
     `
     mainWindow.webContents.executeJavaScript(code)
   } catch (error) {
+    console.log(error)
     openEditWindow()
   }
 }
@@ -108,7 +115,8 @@ function autologinMoodle() {
     return 
   }
   try {
-    const data = helper.readFromFile('cred.txt')
+    const userDataPath = helper.getCredPath(electron.app)
+    const data = helper.readFromFile(userDataPath)
     const username = data['M-username']
     const password = data['M-password']
     let code = `
@@ -118,6 +126,7 @@ function autologinMoodle() {
     `
     mainWindow.webContents.executeJavaScript(code)
   } catch (error) {
+    console.log(error)
     openEditWindow()
   }
 }
@@ -126,7 +135,7 @@ function checkForUpdate() {
   checkUpdate.isNewUpdateFound().then(bool =>{
     var v = new MenuItem({
       label: 'Update',
-      click() { shell.openExternal(releases) }
+      click() { electron.shell.openExternal(releases) }
     })
     
     if(bool){
@@ -165,13 +174,13 @@ function createMenu() {
 
 // windows shortcut crap
 if (require('electron-squirrel-startup')) {
-  app.quit()
+  electron.app.quit()
 }
 
 // macOS crap 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') { app.quit() }
+electron.app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') { electron.app.quit() }
 })
-app.on('activate', () => {
+electron.app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
 })
