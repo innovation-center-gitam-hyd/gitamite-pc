@@ -163,11 +163,11 @@ function createMenu() {
   menu = Menu.buildFromTemplate([
     {
       label: 'Back',
-      click() { window.webContents.goBack() }
+      click() { mainWindow.webContents.goBack() }
     },
     {
       label:'Forward',
-      click() { window.webContents.goForward() }
+      click() { mainWindow.webContents.goForward() }
     },
     {
       label: 'Home',
