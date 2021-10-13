@@ -1,8 +1,8 @@
 const electron = require('electron')
 const {BrowserWindow, Menu, MenuItem } = require('electron')
-const helper = require('./helper')
+const helper = require('./js/helper')
 const path = require('path')
-const checkUpdate = require('./checkUpdate')
+const checkUpdate = require('./js/checkUpdate')
 require('@electron/remote/main').initialize()
 
 
@@ -21,7 +21,7 @@ electron.app.on('browser-window-created', (e,window) => {
     window.setSize( 1200, 750)
   }
   window.center()
-  window.setIcon(path.join(__dirname, '../icon.png'))
+  window.setIcon(path.join(__dirname, '../img/icon.png'))
   menu = Menu.buildFromTemplate([
     {
       label: 'Back',
@@ -44,7 +44,7 @@ function  openMainWindow() {
     title: "Gitamite PC"
   })
 
-  mainWindow.loadFile(path.join(__dirname, 'cards.html'))
+  mainWindow.loadFile(path.join(__dirname, './html/cards.html'))
 
   createMenu()
 
@@ -78,7 +78,7 @@ function  openMainWindow() {
 }
 
 function openCard () {
-  mainWindow.loadFile(path.join(__dirname, 'cards.html'))
+  mainWindow.loadFile(path.join(__dirname, './html/cards.html'))
 }
 
 function openEditWindow() {
@@ -91,7 +91,7 @@ function openEditWindow() {
     }
   })
   require("@electron/remote/main").enable(editWindow.webContents)
-  editWindow.loadFile(path.join(__dirname, 'editWindow.html'))
+  editWindow.loadFile(path.join(__dirname, './html/editWindow.html'))
   editWindow.on('closed', () => {
     editWindow = null
   })

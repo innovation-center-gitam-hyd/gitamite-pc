@@ -1,6 +1,6 @@
 const electron = require('electron')
 const { app } = require('@electron/remote')
-const helper = require('./helper')
+const helper = require('../js/helper') || require('./helper')
 
 try {
     const userDataPath = helper.getCredPath(app)

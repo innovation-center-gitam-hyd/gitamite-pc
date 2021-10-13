@@ -1,6 +1,6 @@
 const request = require('request-promise')
 const cheerio = require('cheerio')
-const package = require('../package.json')
+const package = require('../../package.json')
 
 url = 'https://github.com/innovation-center-gitam-hyd/gitamite-pc/releases/latest'
 
