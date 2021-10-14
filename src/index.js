@@ -15,10 +15,13 @@ let link1 = 'https://login.gitam.edu/Login.aspx'
 let link2 = 'https://learn.gitam.edu/login/index.php'
 let releases = 'https://github.com/innovation-center-gitam-hyd/gitamite-pc/releases/latest'
 
+
 electron.app.on('ready', openMainWindow)
+
 electron.app.on('browser-window-created', (e,window) => {
+  let screensize = electron.screen.getPrimaryDisplay().size
   if(window.getTitle() != "Edit Credentials"){
-    window.setSize( 1200, 750)
+    window.setSize( Math.ceil(screensize.width * 9/10), Math.ceil(screensize.height * 9/10))
   }
   window.center()
   window.setIcon(path.join(__dirname, '../img/icon.png'))
@@ -191,8 +194,6 @@ function createMenu() {
   ])
   Menu.setApplicationMenu(menu) 
 }
-
-
 
 // windows shortcut crap
 if (require('electron-squirrel-startup')) {
