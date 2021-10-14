@@ -1,7 +1,7 @@
 {
   "name": "gitamite-pc",
   "productName": "gitamite-pc",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Gitam app to access all the gitam websites built for PC. ",
   "main": "src/index.js",
   "build": {
