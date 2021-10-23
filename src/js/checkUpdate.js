@@ -17,7 +17,7 @@ async function getLatestVersion(){
         if (version == "") {
             return '404'
         }
-        return version
+        return version.trim()
     } catch (err) {
         return '404'
     } 

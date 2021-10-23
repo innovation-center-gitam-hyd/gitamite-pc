@@ -11,8 +11,6 @@
       "icon": "../img/icon.ico"
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
       "installerIcon": "../img/icon.ico"
     },
     "publish": [
@@ -26,8 +24,8 @@
     "patch": "npm version patch &&  git push && git push --tags",
     "minor": "npm version minor && git push && git push --tags",
     "major": "npm version major && git push && git push --tags",
-    "start": "electron .",
-    "dist": "electron-builder"
+    "start": "npx electron .",
+    "dist" : "npx electron-builder"
   },
   "keywords": [],
   "author": {
@@ -45,7 +43,7 @@
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
-    "electron": "14.0.1",
+    "electron": "^14.0.1",
     "electron-builder": "^22.11.7"
   }
 }
