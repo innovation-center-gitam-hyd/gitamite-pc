@@ -3,6 +3,7 @@ const {BrowserWindow, Menu, MenuItem } = require('electron')
 const helper = require('./js/helper')
 const path = require('path')
 const checkUpdate = require('./js/checkUpdate')
+const {getSubjectCodes} = require('./js/timetable')
 require('@electron/remote/main').initialize()
 
 
@@ -40,6 +41,10 @@ electron.app.on('browser-window-created', (e,window) => {
     }
   ])
   window.setMenu(menu)
+
+  window.webContents.on("did-finish-load", () => {
+    getSubjectCodes(window)
+  })
 })
 
 function  openMainWindow() {
@@ -50,13 +55,9 @@ function  openMainWindow() {
   mainWindow.loadFile(path.join(__dirname, './html/cards.html'))
 
   createMenu()
-
   checkForUpdate()
-
   mainWindow.webContents.on("did-finish-load", () => {
-
     mainWindow.webContents.findInPage('Invalid login')
-    
     if(spAutoLogin){
       autologinStudentPortal()
     }
