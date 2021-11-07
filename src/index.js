@@ -3,7 +3,7 @@ const {BrowserWindow, Menu, MenuItem } = require('electron')
 const helper = require('./js/helper')
 const path = require('path')
 const checkUpdate = require('./js/checkUpdate')
-const {getSubjectCodes} = require('./js/timetable')
+const {windowOnload} = require('./js/timetable')
 require('@electron/remote/main').initialize()
 
 
@@ -43,7 +43,7 @@ electron.app.on('browser-window-created', (e,window) => {
   window.setMenu(menu)
 
   window.webContents.on("did-finish-load", () => {
-    getSubjectCodes(window)
+    windowOnload(window)
   })
 })
 
