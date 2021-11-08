@@ -92,3 +92,4 @@ out/
 #credentials
 cred.txt
 src/js/tempCodeRunnerFile.js
+src/test.js

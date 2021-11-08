@@ -62,7 +62,7 @@ function convertToNames(t){
   subjectCodes.forEach(element => {
     for (const i in timetable) {
       for (const j in timetable[i]) {
-        if (timetable[i][j] == element[0]){
+        if (timetable[i][j].includes(element[0])){
           timetable[i][j] = element[1]
         }
       }
